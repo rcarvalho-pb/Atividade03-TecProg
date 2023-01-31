@@ -6,39 +6,28 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.Locale;
 
 public class Main {
+  public static final int index = 1;
+  public static final String mensagem = "%sª Dose - Data: %s - %s.";
   public static void main(String[] args) {
+
     Locale localeBR = new Locale("pt", "BR");
     Locale.setDefault(localeBR);
     DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    var data = LocalDate.parse("28/01/2023", df);
+    var data = LocalDate.parse("29/01/2023", df);
     int mesesVacina = 3;
 
-    LocalDate now = LocalDate.now();
-
-    java.time.DayOfWeek dayOfWeek = now.getDayOfWeek();
-    System.out.println(dayOfWeek);
-    System.out.println(Locale.getDefault());
-
-    System.out.println(dayOfWeek.getDisplayName(TextStyle.FULL, Locale.getDefault()));
-    // System.out.println(dayOfWeek.getDisplayName(TextStyle.FULL, new Locale("pt","BR" )));
-
-    // for (int i = 0; i < mesesVacina; i++) {
-    //   System.out.println("%sª Dose: %s - %s.".formatted(i+1, isWeekend(data.plusMonths(i*3)).format(df), isWeekend(data.plusMonths(i*3)).getDayOfWeek()));
-    // }
+    for (int i = index; i < (mesesVacina + index); i++) {
+      int parametroParaFuncaoFimDeSemana = (i - index) * 3;
+      System.out.println(mensagem.formatted((i), eFimDeSemana(data.plusMonths(parametroParaFuncaoFimDeSemana)).getDayOfWeek().getDisplayName(TextStyle.FULL, Locale.getDefault()), eFimDeSemana(data.plusMonths(parametroParaFuncaoFimDeSemana)).format(df)));
+    }
 
   }
 
-  public static LocalDate isWeekend(LocalDate data){
+  public static LocalDate eFimDeSemana(LocalDate data){
     if (data.getDayOfWeek() == DayOfWeek.SATURDAY) return data.with(TemporalAdjusters.previous(DayOfWeek.FRIDAY));
     if (data.getDayOfWeek() == DayOfWeek.SUNDAY) return data.with(TemporalAdjusters.next(DayOfWeek.MONDAY));
     return data;
   }
 
-  // public static String diaDaSemana(LocalDate data) {
-  //   switch(data.getDayOfWeek()){
-  //     case DayOfWeek.MONDAY -> return "Segunda";
-  //     default -> throw new IllegalArgumentException("Unexpected value: " + data.getDayOfWeek());
-      
-  //   }
-  // }
+  
 }
