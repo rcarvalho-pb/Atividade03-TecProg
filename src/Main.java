@@ -8,13 +8,14 @@ import java.util.Locale;
 public class Main {
   public static final int index = 1;
   public static final String mensagem = "%sª Dose - Data: %s - %s.";
+  public static final DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+  
   public static void main(String[] args) {
 
     Locale localeBR = new Locale("pt", "BR");
     Locale.setDefault(localeBR);
-    DateTimeFormatter df = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     var data = LocalDate.parse("29/01/2023", df);
-    int mesesVacina = 3;
+    int mesesVacina = 4;
 
     for (int i = index; i < (mesesVacina + index); i++) {
       int parametroParaFuncaoFimDeSemana = (i - index) * 3;
